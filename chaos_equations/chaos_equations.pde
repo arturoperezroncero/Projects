@@ -1,9 +1,9 @@
 float y,x,t,lol,s1,s2,s3,wtf,yeah,in1,in2,in3,in4,vel,complexity,size,opacity,quality;
 boolean drag;
-float s[]=new float[10000];
-float c1[]=new float[10000];
-float c2[]=new float[10000];
-float c3[]=new float[10000];
+float s[]=new float[100000];
+float c1[]=new float[100000];
+float c2[]=new float[100000];
+float c3[]=new float[100000];
 float ran[]=new float[18];
 
 void setup() {
@@ -19,10 +19,44 @@ void setup() {
   
   lol=s.length-1;
   
+  //for(int i=0; i<lol;i+=quality){
+  //  c1[i]=random(0,255);
+  //  c2[i]=random(0,255);
+  //  c3[i]=random(0,255);
+  //}
+  
   for(int i=0; i<lol;i+=quality){
-    c1[i]=random(0,255);
-    c2[i]=random(0,255);
-    c3[i]=random(0,255);
+    int poscol=i % 1530;
+    if(poscol>=0 && poscol<255){
+      c1[i]=255;
+      c2[i]=i % 255;
+      c3[i]=0;
+    }
+    if(poscol>=255 && poscol<510){
+      c1[i]=255-(i % 255);
+      c2[i]=255;
+      c3[i]=0;
+    }
+    if(poscol>=510 && poscol<765){
+      c1[i]=0;
+      c2[i]=255;
+      c3[i]=i % 255;
+    }
+    if(poscol>=765 && poscol<1020){
+      c1[i]=0;
+      c2[i]=255-(i % 255);
+      c3[i]=255;
+    }
+    if(poscol>=1020 && poscol<1275){
+      c1[i]=i % 255;
+      c2[i]=0;
+      c3[i]=255;
+    }
+    if(poscol>=1275 && poscol<1530){
+      c1[i]=255;
+      c2[i]=0;
+      c3[i]=255-(i % 255);
+    }
   }
   
   for(int i=0; i<18;i++){
@@ -41,7 +75,6 @@ void draw() {
   textSize(20);
   text(int(ran[0])+"x^2 "+int(ran[1])+"y^2 "+int(ran[2])+"t^2 "+int(ran[3])+"x "+int(ran[4])+"y "+int(ran[5])+"t "+int(ran[6])+"xy "+int(ran[7])+"xt "+int(ran[8])+"yt ",width/20,height/10);
   text(int(ran[9])+"x^2 "+int(ran[10])+"y^2 "+int(ran[11])+"t^2 "+int(ran[12])+"x "+int(ran[13])+"y "+int(ran[14])+"t "+int(ran[15])+"xy "+int(ran[16])+"xt "+int(ran[17])+"yt ",width/20,height/8);
-  println(quality);
   
   if(drag==true){
     in3=mouseX;
@@ -54,26 +87,36 @@ void draw() {
     translate(in1,in2);
   }
 
+println(mouseX, mouseY);
+
+  if(mousePressed && mouseX>98 && mouseY>92 && mouseX<145 && mouseY<107){
+    if(ran[0]==1){
+      ran[0]=0;
+    }else{
+      ran[0]=1;
+    }
+  }
+
+  ran[0]=0;
+  ran[1]=0;
+  ran[2]=1;
+  ran[3]=0;
+  ran[4]=-1;
+  ran[5]=0;
+  ran[6]=1;
+  ran[7]=-1;
+  ran[8]=0;
   
-  //ran[0]=-1;
-  //ran[1]=0;
-  //ran[2]=0;
-  //ran[3]=0;
-  //ran[4]=1;
-  //ran[5]=0;
-  //ran[6]=0;
-  //ran[7]=1;
-  //ran[8]=0;
+  ran[9]=0;
+  ran[10]=0;
+  ran[11]=1;
+  ran[12]=1;
+  ran[13]=0;
+  ran[14]=0;
+  ran[15]=0;
+  ran[16]=0;
+  ran[17]=0;
   
-  //ran[9]=1;
-  //ran[10]=-1;
-  //ran[11]=-1;
-  //ran[12]=-1;
-  //ran[13]=1;
-  //ran[14]=0;
-  //ran[15]=-1;
-  //ran[16]=0;
-  //ran[17]=1;
   
   //background(0);
   
@@ -82,8 +125,8 @@ void draw() {
   }
 
   
-  s1=t;
-  s2=t;
+  s1=1;
+  s2=1;
   
   for(int i=0; i<lol;i+=quality){
     s[i]=ran[0]*pow(s1,2)+ran[1]*pow(s2,2)+ran[2]*pow(t,2)+ran[3]*s1+ran[4]*s2+ran[5]*t+ran[6]*s1*s2+ran[7]*s1*t+ran[8]*s2*t;
@@ -92,7 +135,7 @@ void draw() {
     s1=s[i];
     s2=s[i+1];
   
-    strokeWeight(1.1);
+    strokeWeight(1.5);
     
     stroke(c1[i],c2[i],c3[i]);
     point(size*s[i],size*s[i+1]);
